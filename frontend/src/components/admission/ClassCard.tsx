@@ -1,0 +1,70 @@
+'use client';
+
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { useStudentId } from '@/hooks/useStudentId';
+import { admissionApi } from '@/lib/api';
+import { useToast } from '@/components/ui/use-toast';
+import type { ClassDto } from '@/lib/api';
+export function ClassCard({ classItem, onApply }: { classItem: ClassDto; onApply: (holdId: string) => void }) {
+  const { studentId } = useStudentId();
+  const { error, success } = useToast();
+
+  const handleApply = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!studentId) {
+      error({ title: 'Student ID required', description: 'Enter your 17-digit birth registration number to apply.' });
+      return;
+    }
+    try {
+      const hold = await admissionApi.apply(classItem.id);
+      onApply(hold.holdId);
+      success({ title: 'Seat reserved', description: `Your seat in ${classItem.name} is reserved.` });
+    } catch (err: any) {
+      if (err.status === 409) {
+        error({ title: 'No seats available', description: 'This class is currently full.' });
+      } else if (err.status === 400) {
+        error({ title: 'Invalid request', description: err.message || 'Please check your student ID.' });
+      } else {
+        error({ title: 'Application failed', description: 'Could not reserve a seat. Please try again.' });
+      }
+    }
+  };
+
+  return (
+    <Card className="border">
+      <CardContent className="p-5 md:p-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <CardTitle className="text-lg font-bold">{classItem.name}</CardTitle>
+            <p className="text-sm text-muted-foreground">Class code: {classItem.id}</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
+            <SeatChip label="Total" value={classItem.totalSeats} variant="bg-muted/50 text-foreground" />
+            <SeatChip label="Held" value={classItem.heldSeats} variant="bg-amber-50 text-amber-800 border-amber-200" />
+            <SeatChip label="Confirmed" value={classItem.confirmedSeats} variant="bg-green-50 text-green-800 border-green-200" />
+            <SeatChip label="Available" value={classItem.availableSeats} variant="bg-blue-50 text-blue-800 border-blue-200" />
+          </div>
+          <form onSubmit={handleApply} className="flex w-full md:w-auto items-center gap-2">
+            <Button
+              type="submit"
+              disabled={classItem.availableSeats <= 0 || !studentId}
+              className="w-full md:w-auto"
+            >
+              {classItem.availableSeats <= 0 ? 'Full' : 'Apply Now'}
+            </Button>
+          </form>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function SeatChip({ label, value, variant }: { label: string; value: number; variant: string }) {
+  return (
+    <div className={`rounded p-2 border ${variant}`}>
+      <div className="text-xs text-muted-foreground">{label}</div>
+      <div className="font-mono font-semibold">{value}</div>
+    </div>
+  );
+}
