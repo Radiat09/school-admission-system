@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useStudentId } from '@/hooks/useStudentId';
 import { setStudentId } from '@/lib/api';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -55,14 +54,14 @@ export function Navbar() {
         <div className="flex items-center gap-3">
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center gap-2 w-[260px]">
             <Label className="sr-only">Student birth registration number</Label>
-            <Input
+            <input
               placeholder="17-digit birth registration no."
-              value={form.getValues('studentId')}
+              defaultValue={currentId || ''}
               onChange={(e) => {
                 form.setValue('studentId', e.target.value);
               }}
               onBlur={() => form.trigger('studentId')}
-              className="w-full"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             />
             <Button type="submit" size="sm" disabled={!form.formState.isSubmitting && !form.getValues('studentId')}>
               Save ID
