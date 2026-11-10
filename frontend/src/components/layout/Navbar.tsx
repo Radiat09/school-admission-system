@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { useStudentId } from '@/hooks/useStudentId';
 import { setStudentId } from '@/lib/api';
@@ -58,7 +57,6 @@ export function Navbar() {
             <input
               {...form.register('studentId')}
               placeholder="17-digit birth registration no."
-              defaultValue={currentId || ''}
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             />
             {form.formState.errors.studentId && (
