@@ -18,24 +18,24 @@ export function AdminClassList({ classes }: { classes: ClassDto[] }) {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {classes.map((c) => (
-              <Card key={c.id} className="border p-4">
-                <CardTitle className="text-base">{c.name}</CardTitle>
-                <div className="grid grid-cols-4 gap-2 text-xs mt-2">
-                  <div className="bg-muted/50 rounded p-2">
-                    <div className="text-muted-foreground">Total</div>
-                    <div className="font-mono font-semibold">{c.totalSeats}</div>
+              <Card key={c.id} className="border p-5 min-w-0">
+                <CardTitle className="text-base font-semibold mb-2">{c.name}</CardTitle>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
+                  <div className="bg-muted/50 rounded-lg p-3">
+                    <div className="text-[10px] text-muted-foreground uppercase tracking-wider">Total</div>
+                    <div className="font-mono font-semibold text-lg">{c.totalSeats}</div>
                   </div>
-                  <div className="bg-amber-50 rounded p-2">
-                    <div className="text-amber-900">Held</div>
-                    <div className="font-mono font-semibold text-amber-800">{c.heldSeats}</div>
+                  <div className="bg-amber-50 rounded-lg p-3 border border-amber-100">
+                    <div className="text-[10px] text-amber-900 uppercase tracking-wider">Held</div>
+                    <div className="font-mono font-semibold text-lg text-amber-800">{c.heldSeats}</div>
                   </div>
-                  <div className="bg-green-50 rounded p-2">
-                    <div className="text-green-900">Confirmed</div>
-                    <div className="font-mono font-semibold text-green-800">{c.confirmedSeats}</div>
+                  <div className="bg-green-50 rounded-lg p-3 border border-green-100">
+                    <div className="text-[10px] text-green-900 uppercase tracking-wider">Confirmed</div>
+                    <div className="font-mono font-semibold text-lg text-green-800">{c.confirmedSeats}</div>
                   </div>
-                  <div className="bg-blue-50 rounded p-2">
-                    <div className="text-blue-900">Available</div>
-                    <div className="font-mono font-semibold text-blue-800">{c.availableSeats}</div>
+                  <div className="bg-blue-50 rounded-lg p-3 border border-blue-100">
+                    <div className="text-[10px] text-blue-900 uppercase tracking-wider">Available</div>
+                    <div className="font-mono font-semibold text-lg text-blue-800">{c.availableSeats}</div>
                   </div>
                 </div>
               </Card>
