@@ -86,23 +86,24 @@ export function HoldDetails({ hold, className, onStatusChange }: HoldDetailsProp
             </div>
           </div>
         )}
-        <div className="flex items-center gap-3">
-          <Button
-            onClick={handleConfirm}
-            disabled={!isActive}
-            className="w-full"
-          >
-            {hold.status === 'CONFIRMED' ? 'Confirmed' : expired ? 'Expired' : 'Pay Admission Fee'}
-          </Button>
-          <Button
-            variant="outline"
-            onClick={handleCancel}
-            disabled={hold.status !== 'HELD'}
-            className="w-full"
-          >
-            Cancel Application
-          </Button>
-        </div>
+          <div className="flex items-center gap-3">
+            <Button
+              onClick={handleConfirm}
+              disabled={!isActive}
+              className="w-full"
+            >
+              {hold.status === 'CONFIRMED' ? 'Confirmed' : expired ? 'Expired' : 'Pay Admission Fee'}
+            </Button>
+            {hold.status === 'HELD' && (
+              <Button
+                variant="outline"
+                onClick={handleCancel}
+                className="w-full"
+              >
+                Cancel Application
+              </Button>
+            )}
+          </div>
         {hold.status === 'EXPIRED' && (
           <div className="text-sm text-destructive">
             Your reservation has expired. The seat has been released. You may apply again if seats remain.
