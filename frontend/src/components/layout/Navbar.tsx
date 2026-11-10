@@ -5,6 +5,10 @@ import Link from 'next/link';
 import { useStudentId } from '@/hooks/useStudentId';
 import { setStudentId } from '@/lib/api';
 import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { studentIdSchema } from '@/lib/validations';
 import { useToast } from '@/components/ui/use-toast';
 import { Badge } from '@/components/ui/badge';
 
@@ -12,17 +16,13 @@ export function Navbar() {
   const { studentId, setStudentId: setId, isInitialized, currentId } = useStudentId();
   const { toast } = useToast();
 
-  const [inputValue, setInputValue] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+  const form = useForm<{ studentId: string }>({
+    resolver: zodResolver(studentIdSchema),
+    defaultValues: { studentId: currentId || '' },
+  });
 
-  const handleSave = () => {
-    setError(null);
-    const trimmed = inputValue.trim();
-    if (!/^\d{17}$/.test(trimmed)) {
-      setError('Student ID must be exactly 17 digits.');
-      return;
-    }
-    setId(trimmed);
+  const onSubmit = (values: { studentId: string }) => {
+    setId(values.studentId);
     toast({ description: 'Student ID saved.' });
   };
 
@@ -53,18 +53,18 @@ export function Navbar() {
           <span className="text-xs font-mono text-muted-foreground">Admissions</span>
         </div>
         <div className="flex items-center gap-3">
-          <form onSubmit={(e) => { e.preventDefault(); handleSave(); }} className="flex items-center gap-2 w-[260px]">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center gap-2 w-[260px]">
+            <Label className="sr-only">Student birth registration number</Label>
             <input
+              {...form.register('studentId')}
               placeholder="17-digit birth registration no."
-              value={inputValue}
-              onChange={(e) => {
-                setInputValue(e.target.value);
-                setError(null);
-              }}
+              defaultValue={currentId || ''}
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             />
-            {error && <span className="text-xs text-destructive">{error}</span>}
-            <Button type="submit" size="sm" disabled={studentId !== null}>
+            {form.formState.errors.studentId && (
+              <span className="text-xs text-destructive">{form.formState.errors.studentId.message}</span>
+            )}
+            <Button type="submit" size="sm" disabled={form.formState.isSubmitting}>
               Save ID
             </Button>
           </form>
