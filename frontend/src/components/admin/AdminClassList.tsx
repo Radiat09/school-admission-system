@@ -20,22 +20,22 @@ export function AdminClassList({ classes }: { classes: ClassDto[] }) {
             {classes.map((c) => (
               <Card key={c.id} className="border p-5 min-w-0">
                 <CardTitle className="text-base font-semibold mb-2">{c.name}</CardTitle>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
-                  <div className="bg-muted/50 rounded-lg p-3">
-                    <div className="text-[10px] text-muted-foreground uppercase tracking-wider">Total</div>
-                    <div className="font-mono font-semibold text-lg">{c.totalSeats}</div>
+                <div className="flex flex-wrap justify-between gap-2 mt-2 min-w-0">
+                  <div className="bg-muted/50 rounded-lg p-3 min-w-[80px]">
+                    <div className="text-[10px] text-muted-foreground uppercase tracking-wider truncate">Total</div>
+                    <div className="font-mono font-semibold text-lg truncate">{c.totalSeats}</div>
                   </div>
-                  <div className="bg-amber-50 rounded-lg p-3 border border-amber-100">
-                    <div className="text-[10px] text-amber-900 uppercase tracking-wider">Held</div>
-                    <div className="font-mono font-semibold text-lg text-amber-800">{c.heldSeats}</div>
+                  <div className="bg-amber-50 rounded-lg p-3 border border-amber-100 min-w-[80px]">
+                    <div className="text-[10px] text-amber-900 uppercase tracking-wider truncate">Held</div>
+                    <div className="font-mono font-semibold text-lg text-amber-800 truncate">{c.heldSeats}</div>
                   </div>
-                  <div className="bg-green-50 rounded-lg p-3 border border-green-100">
-                    <div className="text-[10px] text-green-900 uppercase tracking-wider">Confirmed</div>
-                    <div className="font-mono font-semibold text-lg text-green-800">{c.confirmedSeats}</div>
+                  <div className="bg-green-50 rounded-lg p-3 border border-green-100 min-w-[80px]">
+                    <div className="text-[10px] text-green-900 uppercase tracking-wider truncate">Confirmed</div>
+                    <div className="font-mono font-semibold text-lg text-green-800 truncate">{c.confirmedSeats}</div>
                   </div>
-                  <div className="bg-blue-50 rounded-lg p-3 border border-blue-100">
-                    <div className="text-[10px] text-blue-900 uppercase tracking-wider">Available</div>
-                    <div className="font-mono font-semibold text-lg text-blue-800">{c.availableSeats}</div>
+                  <div className="bg-blue-50 rounded-lg p-3 border border-blue-100 min-w-[80px]">
+                    <div className="text-[10px] text-blue-900 uppercase tracking-wider truncate">Available</div>
+                    <div className="font-mono font-semibold text-lg text-blue-800 truncate">{c.availableSeats}</div>
                   </div>
                 </div>
               </Card>
