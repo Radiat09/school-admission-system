@@ -63,7 +63,7 @@ export function Navbar() {
               {form.formState.errors.studentId && (
                 <span className="text-xs text-destructive">{form.formState.errors.studentId.message}</span>
               )}
-              <Button type="submit" size="sm" disabled={!form.getValues('studentId') || form.formState.isSubmitting}>
+              <Button type="submit" size="sm" disabled={form.formState.isSubmitting}>
                 Save ID
               </Button>
             </form>
