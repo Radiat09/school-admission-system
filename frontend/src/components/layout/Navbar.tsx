@@ -51,22 +51,22 @@ export function Navbar() {
             </Link>
             <span className="text-xs font-mono text-muted-foreground">Admissions</span>
           </div>
-        <div className="flex items-center gap-3">
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center gap-2 w-[260px]">
-            <Label className="sr-only">Student birth registration number</Label>
-            <input
-              placeholder="17-digit birth registration no."
-              defaultValue={currentId || ''}
-              onChange={(e) => {
-                form.setValue('studentId', e.target.value);
-              }}
-              onBlur={() => form.trigger('studentId')}
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            />
-            <Button type="submit" size="sm" disabled={!form.formState.isSubmitting && !form.getValues('studentId')}>
-              Save ID
-            </Button>
-          </form>
+          <div className="flex items-center gap-3">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center gap-2 w-[260px]">
+              <Label className="sr-only">Student birth registration number</Label>
+              <input
+                {...form.register('studentId')}
+                placeholder="17-digit birth registration no."
+                defaultValue={currentId || ''}
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              />
+              {form.formState.errors.studentId && (
+                <span className="text-xs text-destructive">{form.formState.errors.studentId.message}</span>
+              )}
+              <Button type="submit" size="sm" disabled={!form.getValues('studentId') || form.formState.isSubmitting}>
+                Save ID
+              </Button>
+            </form>
           {studentId && (
             <Badge variant="outline">ID: {studentId}</Badge>
           )}
