@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -44,9 +43,10 @@ export function ClassCreateForm({ onCreated }: { onCreated: () => void }) {
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
           <div className="flex flex-col gap-2">
             <Label htmlFor="name">Class Name</Label>
-            <Input
+            <input
               id="name"
               placeholder="e.g. Class 6 - Morning Shift"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               {...form.register('name')}
             />
             {form.formState.errors.name && (
@@ -55,7 +55,15 @@ export function ClassCreateForm({ onCreated }: { onCreated: () => void }) {
           </div>
           <div className="flex flex-col gap-2">
             <Label htmlFor="totalSeats">Total Seats</Label>
-            <Input id="totalSeats" type="number" {...form.register('totalSeats')} />
+            <input
+              id="totalSeats"
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              placeholder="e.g. 40"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              {...form.register('totalSeats')}
+            />
             {form.formState.errors.totalSeats && (
               <span className="text-sm text-destructive">{form.formState.errors.totalSeats.message}</span>
             )}
