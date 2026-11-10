@@ -2,16 +2,15 @@
 
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useStudentId } from '@/hooks/useStudentId';
-import { admissionApi } from '@/lib/api';
+import { admissionApi, getStudentId } from '@/lib/api';
 import { useToast } from '@/components/ui/use-toast';
 import type { ClassDto } from '@/lib/api';
 export function ClassCard({ classItem, onApply }: { classItem: ClassDto; onApply: (holdId: string) => void }) {
-  const { studentId } = useStudentId();
   const { error, success } = useToast();
 
   const handleApply = async (e: React.FormEvent) => {
     e.preventDefault();
+    const studentId = getStudentId();
     if (!studentId) {
       error({ title: 'Student ID required', description: 'Enter your 17-digit birth registration number to apply.' });
       return;
@@ -50,7 +49,7 @@ export function ClassCard({ classItem, onApply }: { classItem: ClassDto; onApply
           <form onSubmit={handleApply} className="flex w-full min-w-0">
             <Button
               type="submit"
-              disabled={classItem.availableSeats <= 0 || !studentId}
+              disabled={classItem.availableSeats <= 0 || !getStudentId()}
               className="w-full"
             >
               {classItem.availableSeats <= 0 ? 'Full' : 'Apply Now'}
