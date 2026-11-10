@@ -16,7 +16,7 @@ export function AdminClassList({ classes }: { classes: ClassDto[] }) {
         {classes.length === 0 ? (
           <div className="text-sm text-muted-foreground text-center py-8">No classes created yet.</div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             {classes.map((c) => (
               <Card key={c.id} className="border p-5 min-w-0">
                 <CardTitle className="text-base font-semibold mb-2">{c.name}</CardTitle>
