@@ -31,7 +31,9 @@ export function Navbar() {
       <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-blur]:bg-background/80 sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-xl font-bold tracking-tight">ONNOROKOM SCHOOL</span>
+            <Link href="/" className="text-xl font-bold tracking-tight hover:opacity-80 transition-opacity">
+              ONNOROKOM SCHOOL
+            </Link>
           </div>
           <div className="flex items-center gap-3 animate-pulse">
             <span className="text-sm text-muted-foreground">Loading…</span>
@@ -44,10 +46,12 @@ export function Navbar() {
   return (
     <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-blur]:bg-background/80 sticky top-0 z-50">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="text-xl font-bold tracking-tight">ONNOROKOM SCHOOL</span>
-          <span className="text-xs font-mono text-muted-foreground">Admissions</span>
-        </div>
+          <div className="flex items-center gap-2">
+            <Link href="/" className="text-xl font-bold tracking-tight hover:opacity-80 transition-opacity">
+              ONNOROKOM SCHOOL
+            </Link>
+            <span className="text-xs font-mono text-muted-foreground">Admissions</span>
+          </div>
         <div className="flex items-center gap-3">
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center gap-2 w-[260px]">
             <Label className="sr-only">Student birth registration number</Label>
